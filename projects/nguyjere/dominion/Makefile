@@ -28,8 +28,11 @@ randomtestadventurer: randomtestadventurer.c dominion.o rngs.o
 	gcc -o randomtestadventurer -g randomtestadventurer.c dominion.o rngs.o $(CFLAGS)
 
 testRandom: randomtestcard1 randomtestcard2 randomtestadventurer
-	(./randomtestcard1; ./randomtestcard2; ./randomtestadventurer) &> unittestresults.out
-	gcov dominion.c >> unittestresults.out
+	./randomtestcard1 &> randomtestcard1.out
+	./randomtestcard2 &> randomtestcard2.out
+	./randomtestadventurer &> randomtestadventurer.out
+	gcov dominion.c &> randomtestcoverage.out
+	cat dominion.c.gcov >> randomtestcoverage.out
 	
 testAll: dominion.o testSuite.c
 	gcc -o testSuite testSuite.c -g  dominion.o rngs.o $(CFLAGS)

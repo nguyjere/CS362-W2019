@@ -1,3 +1,7 @@
+File 'dominion.c'
+Lines executed:34.16% of 562
+Creating 'dominion.c.gcov'
+
         -:    0:Source:dominion.c
         -:    0:Graph:dominion.gcno
         -:    0:Data:dominion.gcda
