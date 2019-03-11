@@ -17,26 +17,37 @@ public class UrlValidatorTest extends TestCase {
       super(testName);
    }
 
-   
-   
-   public void testManualTest()
+   public void testSimplePaths()
    {
-//You can use this function to implement your manual testing	   
-	   
+	   String[] paths = {"index", "index/", "index/etc/", "~index"};
+	   UrlValidator urlValidator = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
+	   for (String path : paths) {
+		   assertTrue(path, urlValidator.isValid("http://www.example.com/" + path));
+	   }
    }
    
-   
-   public void testYourFirstPartition()
+   public void testIpAddresses() {
+       UrlValidator urlValidator = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
+       for (int i = 0; i < 300; i++)
+       {
+    	   String url = String.format("https://%d.%d.%d.%d", i, i, i, i);
+    	   if (i <= 255 || i == 0)
+    	   {
+    		   assertTrue(url, urlValidator.isValid(url));
+    	   } else {
+    		   assertFalse(url, urlValidator.isValid(url));
+    	   }
+       }
+   }
+
+   public void testSchemes()
    {
-	 //You can use this function to implement your First Partition testing	   
-
-   }
-   
-   public void testYourSecondPartition(){
-		 //You can use this function to implement your Second Partition testing	   
-
-   }
-   //You need to create more test cases for your Partitions if you need to 
+	   String[] schemes = {"foo", "bar", "BAZ"};
+	   UrlValidator urlValidator = new UrlValidator(schemes);
+	   for (String scheme : schemes) {
+		   assertTrue(scheme, urlValidator.isValid(scheme + "://www.example.com/"));
+	   }
+   } 
    
    public void testIsValid()
    {
