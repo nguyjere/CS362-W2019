@@ -1,0 +1,19 @@
+TEST FOR gainCard() PASSED!
+TEST FOR initializeGame() PASSED!
+TEST FOR fullDeckCount() PASSED!
+TEST FOR endTurn() PASSED!
+Assertion Failed: Smithy did not yield 3 new cards to player's hand
+Assertion Failed: Smithy was not removed from player's hand
+Assertion Failed: Smithy was not move to played card
+TEST FOR 'Smithy' FAILED!
+Assertion Failed: Adventurer did not yield exactly 2 new treasure cards in hand
+Assertion Failed: Adventurer did not yield exactly 2 new cards in hand
+Assertion Failed: Adventurer was not removed from player's hand
+Assertion Failed: Adventurer was not moved to played card
+TEST FOR 'Adventurer' FAILED!
+TEST FOR 'Council Room' PASSED!
+TEST FOR 'Village' PASSED!
+File 'dominion.c'
+Lines executed:34.16% of 562
+Creating 'dominion.c.gcov'
+
