@@ -1,7 +1,6 @@
-
-
+import java.util.Calendar;
 import junit.framework.TestCase;
-
+import java.util.Random;
 
 public class UrlValidatorTest extends TestCase {
 
@@ -148,11 +147,107 @@ public class UrlValidatorTest extends TestCase {
 		   assertTrue(scheme, urlValidator.isValid(scheme + "://www.example.com/"));
 	   }
    } 
+   private static final long TestTimeout = 60 * 500 * 1;
    
-   public void testIsValid()
+   public static String selectMember(Random random, String[] array) {
+	      int n = random.nextInt(array.length);
+	      return array[n];
+	   }
+   String[] schemes = {"http://","ftp://","h3t://","://","htp://","","http:/","file://"}; //8
+	String[] auths = {"","www.amazon.com","0.0.0.0","amazon.com:80","am.3n","amazon.cc","amazon.com:jhs"}; //7
+	String[] paths = {"/file","/file/file2","/..","/#","/file//file3","/etc"}; //6
+	String[] queries = {"?action=hide","","?action=hide&mode=up"}; //3
+   public void testSchemerandom()
    {
-	   //You can use this function for programming based testing
-
+	
+	long startTime = Calendar.getInstance().getTimeInMillis();
+	long elapsed = Calendar.getInstance().getTimeInMillis() - startTime;
+	System.out.println("Start testing...");
+	for (int iteration = 0; elapsed < TestTimeout; iteration++) 
+	{
+		long randomseed = 10;//System.currentTimeMillis();
+		Random random = new Random(randomseed);
+		for(int i = 0; i < 500; i++)
+		{
+			UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+		    String random2 = selectMember(random, schemes);
+				String temp = random2 + auths[1];
+				urlVal.isValid(temp);	
+		}
+		elapsed = (Calendar.getInstance().getTimeInMillis() - startTime);
+		if ((iteration % 10000) == 0 && iteration != 0)
+			System.out.println("elapsed time: " + elapsed + " of " + TestTimeout);
+	}
+	System.out.println("Done testing...");
    }
    
+   public void testauthsrandom()
+   {
+	
+	long startTime = Calendar.getInstance().getTimeInMillis();
+	long elapsed = Calendar.getInstance().getTimeInMillis() - startTime;
+	System.out.println("Start testing...");
+	for (int iteration = 0; elapsed < TestTimeout; iteration++) 
+	{
+		long randomseed = 10;//System.currentTimeMillis();
+		Random random = new Random(randomseed);
+		for(int i = 0; i < 500; i++)
+		{
+			UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+		    String random2 = selectMember(random, auths);
+				String temp = schemes[0] + random2;
+				urlVal.isValid(temp);	
+		}
+		elapsed = (Calendar.getInstance().getTimeInMillis() - startTime);
+		if ((iteration % 10000) == 0 && iteration != 0)
+			System.out.println("elapsed time: " + elapsed + " of " + TestTimeout);
+	}
+	System.out.println("Done testing...");
+   }
+   public void testpathsrandom()
+   {
+	
+	long startTime = Calendar.getInstance().getTimeInMillis();
+	long elapsed = Calendar.getInstance().getTimeInMillis() - startTime;
+	System.out.println("Start testing...");
+	for (int iteration = 0; elapsed < TestTimeout; iteration++) 
+	{
+		long randomseed = 10;//System.currentTimeMillis();
+		Random random = new Random(randomseed);
+		for(int i = 0; i < 500; i++)
+		{
+			UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+		    String random2 = selectMember(random, paths);
+				String temp = schemes[0] + auths[1]+random2;
+				urlVal.isValid(temp);	
+		}
+		elapsed = (Calendar.getInstance().getTimeInMillis() - startTime);
+		if ((iteration % 10000) == 0 && iteration != 0)
+			System.out.println("elapsed time: " + elapsed + " of " + TestTimeout);
+	}
+	System.out.println("Done testing...");
+   }
+   public void testqueriesrandom()
+   {
+	
+	long startTime = Calendar.getInstance().getTimeInMillis();
+	long elapsed = Calendar.getInstance().getTimeInMillis() - startTime;
+	System.out.println("Start testing...");
+	for (int iteration = 0; elapsed < TestTimeout; iteration++) 
+	{
+		long randomseed = 10;//System.currentTimeMillis();
+		Random random = new Random(randomseed);
+		for(int i = 0; i < 500; i++)
+		{
+			UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+		    String random2 = selectMember(random, queries);
+				String temp = schemes[0] +auths[1]+ random2;
+				urlVal.isValid(temp);	
+		}
+		elapsed = (Calendar.getInstance().getTimeInMillis() - startTime);
+		if ((iteration % 10000) == 0 && iteration != 0)
+			System.out.println("elapsed time: " + elapsed + " of " + TestTimeout);
+	}
+	System.out.println("Done testing...");
+   }
 }
