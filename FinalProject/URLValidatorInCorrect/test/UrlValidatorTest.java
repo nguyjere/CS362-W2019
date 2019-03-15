@@ -153,10 +153,11 @@ public class UrlValidatorTest extends TestCase {
 	      int n = random.nextInt(array.length);
 	      return array[n];
 	   }
-   String[] schemes = {"http://","ftp://","h3t://","://","htp://","","http:/","file://"}; //8
+    String[] schemes = {"http://","ftp://","h3t://","://","htp://","","http:/","file://"}; //8
 	String[] auths = {"","www.amazon.com","0.0.0.0","amazon.com:80","am.3n","amazon.cc","amazon.com:jhs"}; //7
 	String[] paths = {"/file","/file/file2","/..","/#","/file//file3","/etc"}; //6
 	String[] queries = {"?action=hide","","?action=hide&mode=up"}; //3
+	String[] ports =  {":80", ":65555", ":0", ""};
    public void testSchemerandom()
    {
 	
@@ -243,6 +244,35 @@ public class UrlValidatorTest extends TestCase {
 		    String random2 = selectMember(random, queries);
 				String temp = schemes[0] +auths[1]+ random2;
 				urlVal.isValid(temp);	
+		}
+		elapsed = (Calendar.getInstance().getTimeInMillis() - startTime);
+		if ((iteration % 10000) == 0 && iteration != 0)
+			System.out.println("elapsed time: " + elapsed + " of " + TestTimeout);
+	}
+	System.out.println("Done testing...");
+   }
+   public void testisvalidrandom()
+   {
+	
+	long startTime = Calendar.getInstance().getTimeInMillis();
+	long elapsed = Calendar.getInstance().getTimeInMillis() - startTime;
+	System.out.println("Start testing...");
+	for (int iteration = 0; elapsed < TestTimeout; iteration++) 
+	{
+		long randomseed = 10;//System.currentTimeMillis();
+		Random random = new Random(randomseed);
+		for(int i = 0; i < 500; i++)
+		{
+			UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+		    String Scheme = selectMember(random, schemes);
+		    String Authority = selectMember(random, auths);
+		    String Ports = selectMember(random, ports);
+		    String Paths = selectMember(random, paths);
+		    String Query = selectMember(random, queries);
+
+		    String URL = Scheme + Authority + Ports + Paths + Query;
+
+				urlVal.isValid(URL);	
 		}
 		elapsed = (Calendar.getInstance().getTimeInMillis() - startTime);
 		if ((iteration % 10000) == 0 && iteration != 0)
