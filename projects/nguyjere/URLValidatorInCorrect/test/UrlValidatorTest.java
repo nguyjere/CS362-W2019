@@ -109,11 +109,13 @@ public class UrlValidatorTest extends TestCase {
    
    public void testManualFrag()
    {
-	   long options = UrlValidator.NO_FRAGMENTS + UrlValidator.ALLOW_ALL_SCHEMES;
-	   UrlValidator urlVal = new UrlValidator(options);
+	   //frag not valid
+	   UrlValidator urlVal = new UrlValidator(UrlValidator.NO_FRAGMENTS);
 	   assertFalse(urlVal.isValid("https://www.google.com/#/hello"));
-	   assertTrue(urlVal.isValid("https://www.google.com/hello:"));
 	   
+	   //frag valid
+	   urlVal = new UrlValidator();
+	   assertTrue(urlVal.isValid("https://www.google.com/#/hello"));
    }
 	
    public void testSimplePaths()
